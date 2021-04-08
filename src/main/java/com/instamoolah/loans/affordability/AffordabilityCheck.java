@@ -3,21 +3,24 @@ package com.instamoolah.loans.affordability;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 import org.flowable.engine.delegate.DelegateExecution;
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component("checkAffordability")
 public class AffordabilityCheck implements JavaDelegate {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(AffordabilityCheck.class);
+
   @Override
   public void execute(DelegateExecution execution) {
-      // String employeeName = execution.getVariable("employeeName", String.class);
-      // Integer numberOfDays = execution.getVariable("numberOfDays", Integer.class);
-      // String vacationMotivation = execution.getVariable("vacationMotivation", String.class);
+      int harmoneyScore = execution.getVariable("harmoneyScore", Integer.class);
+      boolean emailVerified = execution.getVariable("emailVerified", Boolean.class);
+      String collectionStatus = execution.getVariable("collectionStatus", String.class);
 
-      // LOGGER.info("{} requested vacation for {} days. Motivation {}", employeeName, numberOfDays, vacationMotivation);
+      LOGGER.info("Loan requested with harmoney score = {}, email verified = {}, and collection status = {}", harmoneyScore, emailVerified, collectionStatus);
+
+      // Run Drools engine here
 
       execution.setVariable("affordabilityApproved", true);
   }
-
 }
