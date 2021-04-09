@@ -21,6 +21,6 @@ public class AffordabilityCheck implements JavaDelegate {
 
       // Run Drools engine here
 
-      execution.setVariable("affordabilityApproved", false);
+      execution.setVariable("affordabilityApproved", true);
   }
 }
