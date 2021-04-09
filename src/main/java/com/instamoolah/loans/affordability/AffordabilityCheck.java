@@ -13,14 +13,14 @@ public class AffordabilityCheck implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) {
-      int harmoneyScore = execution.getVariable("harmoneyScore", Integer.class);
+      int riskScore = execution.getVariable("riskScore", Integer.class);
       boolean emailVerified = execution.getVariable("emailVerified", Boolean.class);
       String collectionStatus = execution.getVariable("collectionStatus", String.class);
 
-      LOGGER.info("Loan requested with harmoney score = {}, email verified = {}, and collection status = {}", harmoneyScore, emailVerified, collectionStatus);
+      LOGGER.info("Loan requested with risk score = {}, email verified = {}, and collection status = {}", riskScore, emailVerified, collectionStatus);
 
       // Run Drools engine here
 
-      execution.setVariable("affordabilityApproved", true);
+      execution.setVariable("affordabilityApproved", false);
   }
 }
