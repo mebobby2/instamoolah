@@ -1,0 +1,30 @@
+package com.instamoolah.loans
+
+dialect  "mvel"
+
+rule "Affordability pass"
+    when
+        1 == 1
+    then
+       	System.out.println("hello");
+end
+import com.instamoolah.loans.core;.LoanApplication;
+import com.instamoolah.loans.core;.CollectionStatus;
+import com.instamoolah.loans.core;.LoanStatus;
+
+global com.instamoolah.loans.core;.LoanApplication loanApplication;
+dialect  "mvel"
+
+rule "Affordability pass"
+    when
+        LoanApplication(riskScore > -100 && emailVerified == true && collectionStatus != CollectionStatus.HARDSHIP);
+    then
+       	loanApplication.setStatus(LoanStatus.AFFORDABILITY_PASSED);
+end
+
+rule "Affordability fail"
+    when
+        LoanApplication(riskScore < -101 || emailVerified == false || collectionStatus == CollectionStatus.HARDSHIP);
+    then
+       	loanApplication.setStatus(LoanStatus.REJECTED);
+end

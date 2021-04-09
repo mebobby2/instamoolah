@@ -1,4 +1,4 @@
-package com.instamoolah.loans.affordability;
+package com.instamoolah.loans.delegate;
 
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
