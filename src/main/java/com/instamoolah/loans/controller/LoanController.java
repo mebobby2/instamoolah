@@ -23,6 +23,7 @@ public class LoanController {
 
   @PostMapping("/loan")
   public String start(@RequestBody LoanApplication application) {
+    LOGGER.info("new loan application started");
     return service.startProcess(application);
   }
 }
