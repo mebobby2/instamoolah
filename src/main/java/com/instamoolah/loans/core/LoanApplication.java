@@ -12,21 +12,6 @@ public class LoanApplication {
   public LoanApplication(
     Integer riskScore,
     Boolean emailVerified,
-    CollectionStatus collectionStatus,
-    LoanPurpose purpose,
-    Integer amount
-  ) {
-    this.riskScore = riskScore;
-    this.emailVerified = emailVerified;
-    this.collectionStatus = collectionStatus;
-    this.purpose = purpose;
-    this.amount = amount;
-    this.status = LoanStatus.NEW;
-  }
-
-  public LoanApplication(
-    Integer riskScore,
-    Boolean emailVerified,
     CollectionStatus collectionStatus
   ) {
     this.riskScore = riskScore;
