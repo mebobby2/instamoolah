@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-public class LoanController {
+public class LoansController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(
-    LoanController.class
+    LoansController.class
   );
 
   @Autowired
   private LoanApplicationWorkflowService service;
 
-  @PostMapping("/loan")
+  @PostMapping("/loans")
   public String start(@RequestBody LoanApplication application) {
     LOGGER.info("new loan application started");
     return service.startProcess(application);
