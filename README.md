@@ -1,5 +1,9 @@
 # Instamoolah Loans
 
+## Prerequisites
+* PostgreSQL
+* Kafka
+
 ## Run
 Start server
 ```
