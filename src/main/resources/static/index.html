@@ -71,10 +71,10 @@
         initModal();
     });
 
-    function create(travelRequest) {
-        $.post("/travels", travelRequest, function () {
+    function create(loanRequest) {
+        $.post("/loans", loanRequest, function () {
             load();
-        }, "json");
+        }, "text");
     }
 
     function remove(id) {
@@ -168,30 +168,34 @@
             var productAction = $("#productAction");
             productAction.unbind();
             var modal = $(this);
-            modal.find('.modal-title').text("Apply for a new loan");
-            modal.find('#pfirstName').val("");
-            modal.find('#plastName').val("");
-            modal.find('#pemail').val("");
-            modal.find('#pnationality').val("");
+            // modal.find('.modal-title').text("Apply for a new loan");
+            // modal.find('#pfirstName').val("");
+            // modal.find('#plastName').val("");
+            // modal.find('#pemail').val("");
+            // modal.find('#pnationality').val("");
 
-            modal.find('#street').val("");
-            modal.find('#city').val("");
-            modal.find('#zipCode').val("");
-            modal.find('#country').val("");
+            // modal.find('#street').val("");
+            // modal.find('#city').val("");
+            // modal.find('#zipCode').val("");
+            // modal.find('#country').val("");
 
-            modal.find('#pdestinationCountry').val("");
-            modal.find('#pdestinationCity').val("");
-            modal.find('#ptripBegin').val("");
-            modal.find('#ptripEnd').val("");
+            // modal.find('#pdestinationCountry').val("");
+            // modal.find('#pdestinationCity').val("");
+            // modal.find('#ptripBegin').val("");
+            // modal.find('#ptripEnd').val("");
 
             productAction.click(function () {
 
-            	var address = {street: $("#street").val(), city: $("#city").val(), zipCode: $("#zipCode").val(), country: $("#country").val()};
-            	var traveller = {firstName: $("#pfirstName").val(), lastName: $("#plastName").val(), email: $("#pemail").val(), nationality: $("#pnationality").val(), address: address};
-            	var trip = {country: $("#pdestinationCountry").val(), city: $("#pdestinationCity").val(), begin: $("#ptripBegin").val() + 'T00:00:00.000+02:00', end: $("#ptripEnd").val() + 'T00:00:00.000+02:00'};
-            	var travelRequest = JSON.stringify({traveller: traveller, trip: trip});
+							var loanApplication = {
+								riskScore: $("#riskScore").val(),
+								emailVerified: $("input:radio[name='emailVerified']:checked").attr("data-value"),
+								collectionStatus: $("#collectionStatus").val(),
+								amount: $("#amount").val(),
+								purpose: $("#purpose").val()
+							}
+            	var loanRequest = JSON.stringify(loanApplication);
 
-                create(travelRequest);
+                create(loanRequest);
                 $('#productModal').modal('toggle');
             });
 
@@ -303,23 +307,35 @@
 							<h3>Applicant</h3>
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="form-group">
-									<label for="riskScore">Risk Score</label> <input type="text"
+									<label for="riskScore">Risk Score</label> <input type="number"
 										class="form-control" id="riskScore" name="riskScore" required>
 								</div>
 								<div class="form-group">
-									<label for="emailVerified">Email Verified</label> <input type="text"
-										class="form-control" id="emailVerified" name="emailVerified" required>
+									<label for="emailVerified">Email Verified</label>
+										<br/><span>Yes</span><input type="radio"
+										 id="emailVerifiedYes" name="emailVerified" data-value="true" checked>
+										<span style="margin-left: 20px;">No</span><input type="radio"
+										 id="emailVerifiedNo" name="emailVerified" data-value="false">
 								</div>
 								<div class="form-group">
-									<label for="collectionStatus">Collection Status</label> <input type="text"
-										class="form-control" id="collectionStatus" name="collectionStatus" required>
+									<label for="collectionStatus">Collection Status</label>
+									<select name="collectionStatus" id="collectionStatus" class="form-control">
+										<option value="NA">Not Available</option>
+										<option value="GOOD">Good</option>
+										<option value="HARDSHIP">Hardship</option>
+								</select>
 								</div>
 							</div>
 							<h3>Loan</h3>
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="form-group">
-									<label for="purpose">Purpose</label> <input type="text"
-										class="form-control" id="purpose" name="purpose" required>
+									<label for="purpose">Purpose</label>
+										<select name="purpose" id="purpose" class="form-control">
+											<option value="BUSINESS">Business</option>
+											<option value="DEBT_CON">Debt Consolidation</option>
+											<option value="RENO">Renovation</option>
+											<option value="OTHER">Other</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label for="amount">Amount</label> <input type="text"
@@ -329,7 +345,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Cancel</button>
-								<button type="button" id="productAction" class="btn btn-primary">Book your trip</button>
+								<button type="button" id="productAction" class="btn btn-primary">Apply now</button>
 							</div>
 						</div>
 					</div>
