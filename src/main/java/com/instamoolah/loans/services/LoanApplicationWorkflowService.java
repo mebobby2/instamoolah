@@ -2,6 +2,9 @@ package com.instamoolah.loans.services;
 
 import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
+import com.instamoolah.loans.core.LoanPurpose;
+import com.instamoolah.loans.core.LoanStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.flowable.engine.RuntimeService;
@@ -24,6 +27,8 @@ public class LoanApplicationWorkflowService {
       .variable("riskScore", app.getRiskScore())
       .variable("emailVerified", app.getEmailVerified())
       .variable("collectionStatus", app.getCollectionStatus().name())
+      .variable("purpose", app.getPurpose().name())
+      .variable("amount", app.getAmount())
       .start()
       .getId();
   }
@@ -50,6 +55,10 @@ public class LoanApplicationWorkflowService {
       processInstance.getId(),
       "riskScore"
     );
+    Integer amount = (Integer) runtimeService.getVariable(
+      processInstance.getId(),
+      "amount"
+    );
     Boolean emailVerified = (Boolean) runtimeService.getVariable(
       processInstance.getId(),
       "emailVerified"
@@ -58,12 +67,23 @@ public class LoanApplicationWorkflowService {
       processInstance.getId(),
       "collectionStatus"
     );
+    String loanStatus = (String) runtimeService.getVariable(
+      processInstance.getId(),
+      "loanStatus"
+    );
+    String purpose = (String) runtimeService.getVariable(
+      processInstance.getId(),
+      "purpose"
+    );
 
     LoanApplication loan = new LoanApplication(
       riskScore,
       emailVerified,
       CollectionStatus.valueOf(collectionStatus)
     );
+    loan.setStatus(LoanStatus.valueOf(loanStatus));
+    loan.setAmount(amount);
+    loan.setPurpose(LoanPurpose.valueOf(purpose));
     loan.setId(processInstance.getId());
     return loan;
   }

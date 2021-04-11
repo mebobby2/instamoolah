@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
+import com.instamoolah.loans.core.LoanStatus;
 import com.instamoolah.loans.services.AffordabilityService;
 
 import org.flowable.engine.delegate.DelegateExecution;
@@ -30,6 +31,9 @@ public class AffordabilityCheck implements JavaDelegate {
 
       LoanApplication application = new LoanApplication(riskScore, emailVerified, CollectionStatus.valueOf(collectionStatus));
       service.checkAffordability(application);
+
+      LOGGER.info("Loan Application status is now {}", application.getStatus().name());
+      execution.setVariable("loanStatus", application.getStatus().name());
 
       execution.setVariable("affordabilityApproved", application.canAfford());
   }
