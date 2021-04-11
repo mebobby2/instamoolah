@@ -2,8 +2,8 @@ package com.instamoolah.loans.services;
 
 import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +36,35 @@ public class LoanApplicationWorkflowService {
       .processDefinitionKey(processDefinitionKey)
       .list();
 
-      List<LoanApplication> loans = new ArrayList<>(activeProcesses.size());
-      activeProcesses.forEach(p -> loans.add(populator(p)));
-      return loans;
+    List<LoanApplication> loans = new ArrayList<>(activeProcesses.size());
+    activeProcesses.forEach(p -> loans.add(populator(p)));
+    return loans;
+  }
+
+  public void deleteProcess(String id) {
+    runtimeService.deleteProcessInstance(id, "customer delete");
   }
 
   private LoanApplication populator(ProcessInstance processInstance) {
-    Integer riskScore = (Integer) runtimeService.getVariable(processInstance.getId(), "riskScore");
-    Boolean emailVerified = (Boolean) runtimeService.getVariable(processInstance.getId(), "emailVerified");
-    String collectionStatus = (String) runtimeService.getVariable(processInstance.getId(), "collectionStatus");
+    Integer riskScore = (Integer) runtimeService.getVariable(
+      processInstance.getId(),
+      "riskScore"
+    );
+    Boolean emailVerified = (Boolean) runtimeService.getVariable(
+      processInstance.getId(),
+      "emailVerified"
+    );
+    String collectionStatus = (String) runtimeService.getVariable(
+      processInstance.getId(),
+      "collectionStatus"
+    );
 
-    LoanApplication loan = new LoanApplication(riskScore, emailVerified, CollectionStatus.valueOf(collectionStatus));
+    LoanApplication loan = new LoanApplication(
+      riskScore,
+      emailVerified,
+      CollectionStatus.valueOf(collectionStatus)
+    );
+    loan.setId(processInstance.getId());
     return loan;
-}
+  }
 }

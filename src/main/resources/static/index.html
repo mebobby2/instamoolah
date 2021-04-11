@@ -80,7 +80,7 @@
     function remove(id) {
         $.ajax({
             method: "DELETE",
-            url: "/travels/" + id
+            url: "/loans/" + id
         }).done(function () {
             load();
         });
@@ -131,7 +131,7 @@
                         // "data-flightnumber='" + (val.flight != null ? val.flight.flightNumber : "") + "' " +
                         // "data-arrival='" + (val.flight != null ? val.flight.arrival : "") + "' " +
                         // "data-departure='" + (val.flight != null ? val.flight.departure : "") + "' " +
-                        // "data-id='" + val.id + "'>" +
+                        "data-id='" + val.id + "'>" +
                         "   <span>Details</span>" +
                         "</button>&nbsp;" +
                         "<button class='btn btn-primary btn-sm' " +

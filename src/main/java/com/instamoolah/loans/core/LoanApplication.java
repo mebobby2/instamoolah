@@ -8,6 +8,7 @@ public class LoanApplication {
   private LoanPurpose purpose;
   private Integer amount;
   private LoanStatus status;
+  private String id;
 
   public LoanApplication(
     Integer riskScore,
@@ -66,6 +67,14 @@ public class LoanApplication {
 
   public void setStatus(LoanStatus status) {
     this.status = status;
+  }
+
+  public String getId() {
+    return this.id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public Boolean canAfford() {
