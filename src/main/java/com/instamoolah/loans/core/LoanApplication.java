@@ -84,4 +84,8 @@ public class LoanApplication {
       this.status == LoanStatus.APPROVED
     );
   }
+
+  public Boolean isApproved() {
+    return (this.status == LoanStatus.APPROVED);
+  }
 }

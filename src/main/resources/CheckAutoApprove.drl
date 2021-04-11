@@ -1,0 +1,20 @@
+import com.instamoolah.loans.core.LoanApplication;
+import com.instamoolah.loans.core.LoanPurpose;
+import com.instamoolah.loans.core.LoanStatus;
+
+global com.instamoolah.loans.core.LoanApplication loanApplication;
+dialect  "mvel"
+
+rule "Auto-approve pass"
+  when
+    LoanApplication(amount < 100000 && purpose != LoanPurpose.BUSINESS);
+  then
+    loanApplication.setStatus(LoanStatus.APPROVED);
+end
+
+rule "Auto-approve fail"
+  when
+    LoanApplication(amount >= 100000 || purpose == LoanPurpose.BUSINESS);
+  then
+    // Do nothing
+end
