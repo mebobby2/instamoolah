@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.instamoolah.loans.core.LoanApplication;
 
 @Service
-public class AffordabilityService {
+public class AutoApproveService {
 
     @Autowired
     private KieContainer kContainer;

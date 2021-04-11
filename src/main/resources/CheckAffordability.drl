@@ -1,20 +1,19 @@
-import com.instamoolah.loans.core.LoanApplication;
+import com.instamoolah.loans.core.Applicant;
 import com.instamoolah.loans.core.CollectionStatus;
-import com.instamoolah.loans.core.LoanStatus;
 
-global com.instamoolah.loans.core.LoanApplication loanApplication;
+global com.instamoolah.loans.core.Applicant applicant;
 dialect  "mvel"
 
 rule "Affordability pass"
   when
-    LoanApplication(riskScore > -100 && emailVerified == true && collectionStatus != CollectionStatus.HARDSHIP);
+    Applicant(riskScore > -100 && emailVerified == true && collectionStatus != CollectionStatus.HARDSHIP);
   then
-    loanApplication.setStatus(LoanStatus.AFFORDABILITY_PASSED);
+    applicant.setAffordabilityApproved(true);
 end
 
 rule "Affordability fail"
   when
-    LoanApplication(riskScore < -101 || emailVerified == false || collectionStatus == CollectionStatus.HARDSHIP);
+    Applicant(riskScore < -101 || emailVerified == false || collectionStatus == CollectionStatus.HARDSHIP);
   then
-    loanApplication.setStatus(LoanStatus.REJECTED);
+    applicant.setAffordabilityApproved(false);
 end

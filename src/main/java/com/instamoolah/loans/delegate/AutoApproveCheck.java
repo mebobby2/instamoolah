@@ -19,40 +19,40 @@ public class AutoApproveCheck implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) {
-    Integer riskScore = execution.getVariable("riskScore", Integer.class);
-    Integer amount = execution.getVariable("amount", Integer.class);
-    Boolean emailVerified = execution.getVariable(
-      "emailVerified",
-      Boolean.class
-    );
-    String collectionStatus = execution.getVariable(
-      "collectionStatus",
-      String.class
-    );
-    String purpose = execution.getVariable(
-      "purpose",
-      String.class
-    );
-    String status = execution.getVariable(
-      "loanStatus",
-      String.class
-    );
+    // Integer riskScore = execution.getVariable("riskScore", Integer.class);
+    // Integer amount = execution.getVariable("amount", Integer.class);
+    // Boolean emailVerified = execution.getVariable(
+    //   "emailVerified",
+    //   Boolean.class
+    // );
+    // String collectionStatus = execution.getVariable(
+    //   "collectionStatus",
+    //   String.class
+    // );
+    // String purpose = execution.getVariable(
+    //   "purpose",
+    //   String.class
+    // );
+    // String status = execution.getVariable(
+    //   "loanStatus",
+    //   String.class
+    // );
 
-    LoanApplication application = new LoanApplication(
-      riskScore,
-      emailVerified,
-      CollectionStatus.valueOf(collectionStatus)
-    );
-    application.setPurpose(LoanPurpose.valueOf(purpose));
-    application.setAmount(amount);
-    application.setStatus(LoanStatus.valueOf(status));
+    // LoanApplication application = new LoanApplication(
+    //   riskScore,
+    //   emailVerified,
+    //   CollectionStatus.valueOf(collectionStatus)
+    // );
+    // application.setPurpose(LoanPurpose.valueOf(purpose));
+    // application.setAmount(amount);
+    // application.setStatus(LoanStatus.valueOf(status));
 
-    // service.checkAffordability(application);
+    // // service.checkAffordability(application);
 
-    if (application.isApproved()) {
-      execution.setVariable("loanStatus", application.getStatus().name());
-    }
+    // if (application.isApproved()) {
+    //   execution.setVariable("loanStatus", application.getStatus().name());
+    // }
 
-    execution.setVariable("loanApproved", application.isApproved());
+    // execution.setVariable("loanApproved", application.isApproved());
   }
 }

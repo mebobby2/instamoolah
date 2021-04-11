@@ -2,47 +2,19 @@ package com.instamoolah.loans.core;
 
 public class LoanApplication {
 
-  private Integer riskScore;
-  private Boolean emailVerified;
-  private CollectionStatus collectionStatus;
+  private Applicant applicant;
   private LoanPurpose purpose;
   private Integer amount;
   private LoanStatus status;
   private String id;
 
   public LoanApplication(
-    Integer riskScore,
-    Boolean emailVerified,
-    CollectionStatus collectionStatus
+    Integer amount,
+    LoanPurpose purpose
   ) {
-    this.riskScore = riskScore;
-    this.emailVerified = emailVerified;
-    this.collectionStatus = collectionStatus;
+    this.amount = amount;
+    this.purpose = purpose;
     this.status = LoanStatus.NEW;
-  }
-
-  public Integer getRiskScore() {
-    return this.riskScore;
-  }
-
-  public void setRiskScore(Integer riskScore) {
-    this.riskScore = riskScore;
-  }
-
-  public Boolean getEmailVerified() {
-    return this.emailVerified;
-  }
-
-  public void setEmailVerified(Boolean emailVerified) {
-    this.emailVerified = emailVerified;
-  }
-
-  public CollectionStatus getCollectionStatus() {
-    return this.collectionStatus;
-  }
-
-  public void setCollectionStatus(CollectionStatus collectionStatus) {
-    this.collectionStatus = collectionStatus;
   }
 
   public Integer getAmount() {
@@ -63,6 +35,14 @@ public class LoanApplication {
 
   public LoanStatus getStatus() {
     return this.status;
+  }
+
+  public void setApplicant(Applicant applicant) {
+    this.applicant = applicant;
+  }
+
+  public Applicant getApplicant() {
+    return this.applicant;
   }
 
   public void setStatus(LoanStatus status) {

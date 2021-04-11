@@ -1,10 +1,9 @@
 package com.instamoolah.loans.services;
 
+import com.instamoolah.loans.controller.LoanPayload;
 import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
-import com.instamoolah.loans.core.LoanPurpose;
 import com.instamoolah.loans.core.LoanStatus;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.flowable.engine.RuntimeService;
@@ -20,20 +19,20 @@ public class LoanApplicationWorkflowService {
   @Autowired
   private RuntimeService runtimeService;
 
-  public String startProcess(LoanApplication app) {
+  public String startProcess(LoanPayload payload) {
     return runtimeService
       .createProcessInstanceBuilder()
       .processDefinitionKey(processDefinitionKey)
-      .variable("riskScore", app.getRiskScore())
-      .variable("emailVerified", app.getEmailVerified())
-      .variable("collectionStatus", app.getCollectionStatus().name())
-      .variable("purpose", app.getPurpose().name())
-      .variable("amount", app.getAmount())
+      .variable("riskScore", payload.riskScore)
+      .variable("emailVerified", payload.emailVerified)
+      .variable("collectionStatus", payload.collectionStatus)
+      .variable("purpose", payload.purpose)
+      .variable("amount", payload.amount)
       .start()
       .getId();
   }
 
-  public List<LoanApplication> getProcesses() {
+  public List<LoanPayload> getProcesses() {
     List<ProcessInstance> activeProcesses = runtimeService
       .createProcessInstanceQuery()
       .active()
@@ -41,7 +40,7 @@ public class LoanApplicationWorkflowService {
       .processDefinitionKey(processDefinitionKey)
       .list();
 
-    List<LoanApplication> loans = new ArrayList<>(activeProcesses.size());
+    List<LoanPayload> loans = new ArrayList<>(activeProcesses.size());
     activeProcesses.forEach(p -> loans.add(populator(p)));
     return loans;
   }
@@ -50,7 +49,7 @@ public class LoanApplicationWorkflowService {
     runtimeService.deleteProcessInstance(id, "customer delete");
   }
 
-  private LoanApplication populator(ProcessInstance processInstance) {
+  private LoanPayload populator(ProcessInstance processInstance) {
     Integer riskScore = (Integer) runtimeService.getVariable(
       processInstance.getId(),
       "riskScore"
@@ -67,7 +66,7 @@ public class LoanApplicationWorkflowService {
       processInstance.getId(),
       "collectionStatus"
     );
-    String loanStatus = (String) runtimeService.getVariable(
+    LoanStatus loanStatus = (LoanStatus) runtimeService.getVariable(
       processInstance.getId(),
       "loanStatus"
     );
@@ -76,15 +75,14 @@ public class LoanApplicationWorkflowService {
       "purpose"
     );
 
-    LoanApplication loan = new LoanApplication(
-      riskScore,
-      emailVerified,
-      CollectionStatus.valueOf(collectionStatus)
-    );
-    loan.setStatus(LoanStatus.valueOf(loanStatus));
-    loan.setAmount(amount);
-    loan.setPurpose(LoanPurpose.valueOf(purpose));
-    loan.setId(processInstance.getId());
-    return loan;
+    LoanPayload payload = new LoanPayload();
+    payload.riskScore = riskScore;
+    payload.emailVerified = emailVerified;
+    payload.collectionStatus = collectionStatus;
+    payload.status = loanStatus.name();
+    payload.amount = amount;
+    payload.purpose = purpose;
+    payload.id = processInstance.getId();
+    return payload;
   }
 }
