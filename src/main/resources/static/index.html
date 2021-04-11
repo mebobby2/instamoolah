@@ -104,42 +104,42 @@
 
     function load() {
         $("#content").children().remove();
-        $.getJSON("/travels", function (data) {
+        $.getJSON("/loans", function (data) {
             $.each(data, function (key, val) {
-                $("<tr><td>" + val.traveller.lastName + ", " + val.traveller.firstName + "</td>" +
-                "<td>" + val.trip.country + ", " + val.trip.city + "</td>" +
-                "<td>" + val.trip.begin.substring(0, 10) + " - " + val.trip.end.substring(0, 10) + "</td>" +
-                "<td>" + (val.trip.visaRequired ? 'Yes' : 'No') + "</td>" +
-                "<td>" + (val.hotel != null ? val.hotel.name : '') + "</td>" +
-                "<td>" + (val.flight != null ? val.flight.flightNumber : '')  + "</td>" +
+                $("<tr><td>" + val.riskScore + "</td>" +
+                "<td>" + val.emailVerified + "</td>" +
+                "<td>" + val.collectionStatus + "</td>" +
+                "<td>" + val.purpose + "</td>" +
+                "<td>" + val.amount + "</td>" +
+                "<td>" + val.status + "</td>" +
                         "<td>" +
                         "<button class='btn btn-primary btn-sm' " +
                         "data-toggle='modal' " +
                         "data-target='#detailsModal' " +
-                        "data-firstname='" + val.traveller.firstName + "' " +
-                        "data-lastname='" + val.traveller.lastName + "' " +
-                        "data-email='" + val.traveller.email + "' " +
-                        "data-nationality='" + val.traveller.nationality + "' " +
-                        "data-country='" + val.trip.country + "' " +
-                        "data-city='" + val.trip.city + "' " +
-                        "data-begin='" + val.trip.begin.substring(0, 10) + "' " +
-                        "data-end='" + val.trip.end.substring(0, 10) + "' " +
-                        "data-hotelname='" + (val.hotel != null ? val.hotel.name : "") + "' " +
-                        "data-address='" + (val.hotel != null ? val.hotel.address.street : "") + "' " +
-                        "data-bookingnumber='" + (val.hotel != null ? val.hotel.bookingNumber : "") + "' " +
-                        "data-phone='" + (val.hotel != null ? val.hotel.phone : "") + "' " +
-                        "data-flightnumber='" + (val.flight != null ? val.flight.flightNumber : "") + "' " +
-                        "data-arrival='" + (val.flight != null ? val.flight.arrival : "") + "' " +
-                        "data-departure='" + (val.flight != null ? val.flight.departure : "") + "' " +
-                        "data-id='" + val.id + "'>" +
+                        // "data-firstname='" + val.traveller.firstName + "' " +
+                        // "data-lastname='" + val.traveller.lastName + "' " +
+                        // "data-email='" + val.traveller.email + "' " +
+                        // "data-nationality='" + val.traveller.nationality + "' " +
+                        // "data-country='" + val.trip.country + "' " +
+                        // "data-city='" + val.trip.city + "' " +
+                        // "data-begin='" + val.trip.begin.substring(0, 10) + "' " +
+                        // "data-end='" + val.trip.end.substring(0, 10) + "' " +
+                        // "data-hotelname='" + (val.hotel != null ? val.hotel.name : "") + "' " +
+                        // "data-address='" + (val.hotel != null ? val.hotel.address.street : "") + "' " +
+                        // "data-bookingnumber='" + (val.hotel != null ? val.hotel.bookingNumber : "") + "' " +
+                        // "data-phone='" + (val.hotel != null ? val.hotel.phone : "") + "' " +
+                        // "data-flightnumber='" + (val.flight != null ? val.flight.flightNumber : "") + "' " +
+                        // "data-arrival='" + (val.flight != null ? val.flight.arrival : "") + "' " +
+                        // "data-departure='" + (val.flight != null ? val.flight.departure : "") + "' " +
+                        // "data-id='" + val.id + "'>" +
                         "   <span>Details</span>" +
                         "</button>&nbsp;" +
                         "<button class='btn btn-primary btn-sm' " +
                         "data-toggle='modal' " +
                         "data-target='#tasksModal' " +
-                        "data-firstname='" + val.traveller.firstName + "' " +
-                        "data-lastname='" + val.traveller.lastName + "' " +
-                        "data-id='" + val.id + "'>" +
+                        // "data-firstname='" + val.traveller.firstName + "' " +
+                        // "data-lastname='" + val.traveller.lastName + "' " +
+                        // "data-id='" + val.id + "'>" +
                         "   <span>Tasks</span>" +
                         "</button>&nbsp;" +
                         "<button class='btn btn-danger btn-sm product-delete' data-id='" + val.id + "'>" +

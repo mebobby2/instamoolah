@@ -1,13 +1,16 @@
 package com.instamoolah.loans.controller;
 
+import java.util.List;
+
 import com.instamoolah.loans.core.LoanApplication;
 import com.instamoolah.loans.services.LoanApplicationWorkflowService;
-
+import org.flowable.engine.runtime.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,5 +28,10 @@ public class LoansController {
   public String start(@RequestBody LoanApplication application) {
     LOGGER.info("new loan application started");
     return service.startProcess(application);
+  }
+
+  @GetMapping("/loans")
+  public List<LoanApplication> getLoans() {
+    return service.getProcesses();
   }
 }
