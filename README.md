@@ -15,7 +15,12 @@ Get Credit Officer Tasks
 curl http://localhost:8000/tasks/creditofficers
 ```
 
-Complete Credit Officer Task
+Approve Credit Officer Task
 ```
-curl --request PUT http://localhost:8000/tasks/creditofficers/{taskId}
+curl --request PUT http://localhost:8000/tasks/creditofficers/approve/{taskId}
+```
+
+Reject Credit Officer Task
+```
+curl --request PUT http://localhost:8000/tasks/creditofficers/reject/{taskId}
 ```

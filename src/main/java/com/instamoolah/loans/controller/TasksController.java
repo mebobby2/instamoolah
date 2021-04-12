@@ -30,9 +30,15 @@ public class TasksController {
     return service.getCreditOfficerTasks(processId);
   }
 
-  @PutMapping("/tasks/creditofficers/{taskId}")
+  @PutMapping("/tasks/creditofficers/approve/{taskId}")
   public void completeTask(@PathVariable String taskId) {
     LOGGER.info("Complete credit officer tasks");
     service.completeCreditOfficerTask(taskId);
+  }
+
+  @PutMapping("/tasks/creditofficers/reject/{taskId}")
+  public void rejectTask(@PathVariable String taskId) {
+    LOGGER.info("Reject credit officer tasks");
+    service.rejectCreditOfficerTask(taskId);
   }
 }

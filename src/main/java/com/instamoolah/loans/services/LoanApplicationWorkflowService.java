@@ -8,6 +8,7 @@ import com.instamoolah.loans.core.LoanStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.flowable.engine.HistoryService;
@@ -95,7 +96,15 @@ public class LoanApplicationWorkflowService {
   }
 
   public void completeCreditOfficerTask(String taskId) {
-    taskService.complete(taskId);
+    Map<String, Object> variables = new HashMap<String, Object>();
+    variables.put("manualAffordabilityApproved", true);
+    taskService.complete(taskId, variables);
+  }
+
+  public void rejectCreditOfficerTask(String taskId) {
+    Map<String, Object> variables = new HashMap<String, Object>();
+    variables.put("manualAffordabilityApproved", false);
+    taskService.complete(taskId, variables);
   }
 
   // Doesn't seem to work - returns 0 results
