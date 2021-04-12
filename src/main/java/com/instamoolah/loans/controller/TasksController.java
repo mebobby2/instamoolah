@@ -24,8 +24,8 @@ public class TasksController {
   @Autowired
   private LoanApplicationWorkflowService service;
 
-  @GetMapping("/tasks/creditofficers")
-  public List<TaskPayload> getTasks() {
-    return service.getCreditOfficerTasks();
+  @GetMapping("/tasks/creditofficers/{processId}")
+  public List<TaskPayload> getTasks(@PathVariable String processId) {
+    return service.getCreditOfficerTasks(processId);
   }
 }

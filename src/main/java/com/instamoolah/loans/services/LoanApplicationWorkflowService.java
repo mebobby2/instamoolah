@@ -69,10 +69,11 @@ public class LoanApplicationWorkflowService {
     runtimeService.deleteProcessInstance(id, "customer delete");
   }
 
-  public List<TaskPayload> getCreditOfficerTasks() {
+  public List<TaskPayload> getCreditOfficerTasks(String processId) {
     List<Task> tasks = taskService
       .createTaskQuery()
       .taskCandidateGroup(creditOfficerTaskGroup)
+      .processInstanceId(processId)
       .list();
     return tasks
       .stream()
