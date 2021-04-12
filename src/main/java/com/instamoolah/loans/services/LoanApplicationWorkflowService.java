@@ -6,8 +6,14 @@ import com.instamoolah.loans.core.LoanApplication;
 import com.instamoolah.loans.core.LoanStatus;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +24,9 @@ public class LoanApplicationWorkflowService {
 
   @Autowired
   private RuntimeService runtimeService;
+
+  @Autowired
+  private HistoryService historyService;
 
   public String startProcess(LoanPayload payload) {
     return runtimeService
@@ -41,11 +50,54 @@ public class LoanApplicationWorkflowService {
 
     List<LoanPayload> loans = new ArrayList<>(activeProcesses.size());
     activeProcesses.forEach(p -> loans.add(populator(p)));
+
+    List<LoanPayload> oldLoans = getHistoricProcesses();
+
+    return Stream
+      .concat(loans.stream(), oldLoans.stream())
+      .collect(Collectors.toList());
+  }
+
+  private List<LoanPayload> getHistoricProcesses() {
+    List<HistoricProcessInstance> historyProcesses = historyService
+      .createHistoricProcessInstanceQuery()
+      .finished()
+      .processDefinitionId(processDefinitionKey)
+      .list();
+
+    List<LoanPayload> loans = new ArrayList<>(historyProcesses.size());
+    historyProcesses.forEach(p -> loans.add(populatorh(p)));
     return loans;
   }
 
   public void deleteProcess(String id) {
     runtimeService.deleteProcessInstance(id, "customer delete");
+  }
+
+  private LoanPayload populatorh(HistoricProcessInstance instance) {
+    List<HistoricVariableInstance> variables = historyService
+      .createHistoricVariableInstanceQuery()
+      .processInstanceId(instance.getId())
+      .list();
+
+    Map<String, HistoricVariableInstance> map = variables
+      .stream()
+      .collect(
+        Collectors.toMap(
+          HistoricVariableInstance::getVariableName,
+          item -> item
+        )
+      );
+
+    LoanPayload payload = new LoanPayload();
+    payload.riskScore = (Integer) map.get("riskScore").getValue();
+    payload.emailVerified = (Boolean) map.get("emailVerified").getValue();
+    payload.collectionStatus = (String) map.get("collectionStatus").getValue();
+    payload.status = (String) map.get("collectionStatus").getValue();
+    payload.amount = (Integer) map.get("amount").getValue();
+    payload.purpose = (String) map.get("purpose").getValue();
+    payload.id = instance.getId();
+    return payload;
   }
 
   private LoanPayload populator(ProcessInstance processInstance) {
