@@ -10,15 +10,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AffordabilityRules {
-    private static final String drlFile = "CheckAffordability.drl";
+public class Rules {
+    private static final String affordabilityRules = "CheckAffordability.drl";
+    private static final String autoapproveRules = "CheckAutoApprove.drl";
 
     @Bean
     public KieContainer kieContainer() {
         KieServices kieServices = KieServices.Factory.get();
 
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
+        kieFileSystem.write(ResourceFactory.newClassPathResource(affordabilityRules));
+        kieFileSystem.write(ResourceFactory.newClassPathResource(autoapproveRules));
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
         kieBuilder.buildAll();
         KieModule kieModule = kieBuilder.getKieModule();

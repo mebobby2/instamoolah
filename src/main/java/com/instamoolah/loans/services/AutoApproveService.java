@@ -12,7 +12,7 @@ public class AutoApproveService {
     @Autowired
     private KieContainer kContainer;
 
-    public LoanApplication checkAffordability(LoanApplication application) {
+    public LoanApplication checkAutoApprove(LoanApplication application) {
         KieSession kieSession = kContainer.newKieSession();
         kieSession.setGlobal("loanApplication", application);
         kieSession.insert(application);
