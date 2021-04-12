@@ -1,0 +1,8 @@
+{
+  "type": "kafka",
+  "channelType": "outbound",
+  "serializerType": "json",
+  "topic": "reserve-funds",
+  "name": "Reserve Funds Outbound Channel",
+  "key": "reserveFundsOutboundChannel"
+}

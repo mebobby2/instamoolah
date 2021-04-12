@@ -1,0 +1,19 @@
+{
+  "correlationParameters": [
+    {
+      "name": "loanAmount",
+      "type": "integer"
+    }
+  ],
+  "payload": [
+    {
+      "name": "loanAmount",
+      "type": "integer"
+    }
+  ],
+  "name": "Reserve Funds Event",
+  "key": "reserveFunds",
+  "outboundChannelKeys": [
+    "reserveFundsOutboundChannel"
+  ]
+}
