@@ -1,16 +1,19 @@
 package com.instamoolah.loans.services;
 
 import com.instamoolah.loans.controller.LoanPayload;
+import com.instamoolah.loans.controller.TaskPayload;
 import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
 import com.instamoolah.loans.core.LoanStatus;
 import java.util.ArrayList;
+import org.flowable.task.api.Task;
 import java.util.List;
-import java.util.stream.Stream;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.variable.api.history.HistoricVariableInstance;
@@ -21,12 +24,16 @@ import org.springframework.stereotype.Service;
 public class LoanApplicationWorkflowService {
 
   static final String processDefinitionKey = "newInstamoolahLoanV2";
+  static final String creditOfficerTaskGroup = "creditofficers";
 
   @Autowired
   private RuntimeService runtimeService;
 
   @Autowired
   private HistoryService historyService;
+
+  @Autowired
+  private TaskService taskService;
 
   public String startProcess(LoanPayload payload) {
     return runtimeService
@@ -58,6 +65,34 @@ public class LoanApplicationWorkflowService {
       .collect(Collectors.toList());
   }
 
+  public void deleteProcess(String id) {
+    runtimeService.deleteProcessInstance(id, "customer delete");
+  }
+
+  public List<TaskPayload> getCreditOfficerTasks() {
+    List<Task> tasks = taskService
+      .createTaskQuery()
+      .taskCandidateGroup(creditOfficerTaskGroup)
+      .list();
+    return tasks
+      .stream()
+      .map(
+        task -> {
+          Map<String, Object> variables = taskService.getVariables(
+            task.getId()
+          );
+          return new TaskPayload(
+            task.getId(),
+            // (String) variables.get("author"),
+            // (String) variables.get("url")
+            task.getName()
+          );
+        }
+      )
+      .collect(Collectors.toList());
+  }
+
+  // Doesn't seem to work - returns 0 results
   private List<LoanPayload> getHistoricProcesses() {
     List<HistoricProcessInstance> historyProcesses = historyService
       .createHistoricProcessInstanceQuery()
@@ -68,10 +103,6 @@ public class LoanApplicationWorkflowService {
     List<LoanPayload> loans = new ArrayList<>(historyProcesses.size());
     historyProcesses.forEach(p -> loans.add(populatorh(p)));
     return loans;
-  }
-
-  public void deleteProcess(String id) {
-    runtimeService.deleteProcessInstance(id, "customer delete");
   }
 
   private LoanPayload populatorh(HistoricProcessInstance instance) {
@@ -101,6 +132,7 @@ public class LoanApplicationWorkflowService {
   }
 
   private LoanPayload populator(ProcessInstance processInstance) {
+    // Clean up all the multiple getVariable calls to one getVariables call
     Integer riskScore = (Integer) runtimeService.getVariable(
       processInstance.getId(),
       "riskScore"

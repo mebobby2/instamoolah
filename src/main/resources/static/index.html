@@ -211,24 +211,17 @@
             var action = button.data('action');
             var id = button.data('id');
             var modal = $(this);
-            modal.find('.modal-title').text("Tasks for " + button.data("lastname") + ", " + button.data("firstname"));
+            modal.find('.modal-title').text("Tasks");
 
             $("#taskscontent").children().remove();
-            $.getJSON("/travels/"+ id + "/tasks", function (data) {
+            $.getJSON("/tasks/creditofficers", function (data) {
             	$.each(data, function (key, val) {
-								if ("VisaApplication" == val.name) {
+								if ("Manual Approval" == val.name) {
 									$("<tr><td>" + val.name + "</td>" +
-                            "<td>" +
-		            		"<button class='btn btn-primary btn-sm' " +
-		            		"data-dismiss=\"modal\" " +
-		                    "data-toggle='modal' " +
-		                    "data-target='#visaApplicationModal' " +
-		                    "data-id='" + id + "' " +
-		                    "data-taskid='" + val.id + "'>" +
-		                    "   <span>Apply</span>" +
-		                    "</button>" +
-		                    "</td>" +
-		                    "</tr>").appendTo("#taskscontent");
+											"<td>" +
+											"Wait for approval" +
+											"</td>" +
+											"</tr>").appendTo("#taskscontent");
 								} else {
 									$("<tr><td>" + val.name + "</td>" +
                             "<td>" +
