@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoanApplicationWorkflowService {
 
-  static final String processDefinitionKey = "newInstamoolahLoan";
+  static final String processDefinitionKey = "newInstamoolahLoanV2";
 
   @Autowired
   private RuntimeService runtimeService;
