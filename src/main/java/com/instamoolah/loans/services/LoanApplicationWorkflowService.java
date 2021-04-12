@@ -36,7 +36,6 @@ public class LoanApplicationWorkflowService {
     List<ProcessInstance> activeProcesses = runtimeService
       .createProcessInstanceQuery()
       .active()
-      .includeProcessVariables()
       .processDefinitionKey(processDefinitionKey)
       .list();
 
