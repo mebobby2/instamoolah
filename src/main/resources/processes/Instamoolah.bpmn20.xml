@@ -32,11 +32,7 @@
       <extensionElements>
         <flowable:eventType><![CDATA[reserveFunds]]></flowable:eventType>
         <flowable:eventInParameter sourceExpression="${amount}" target="loanAmount" targetType="integer"></flowable:eventInParameter>
-        <flowable:eventName xmlns:flowable="http://flowable.org/bpmn"><![CDATA[Reserve Funds Event]]></flowable:eventName>
         <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[reserveFundsOutboundChannel]]></flowable:channelKey>
-        <flowable:channelName xmlns:flowable="http://flowable.org/bpmn"><![CDATA[Reserve Funds Outbound Channel]]></flowable:channelName>
-        <flowable:channelType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[kafka]]></flowable:channelType>
-        <flowable:channelDestination xmlns:flowable="http://flowable.org/bpmn"><![CDATA[reserve-funds]]></flowable:channelDestination>
       </extensionElements>
     </serviceTask>
     <endEvent id="sid-472C9E33-2127-4310-B6B2-EF1237D6769F"></endEvent>
