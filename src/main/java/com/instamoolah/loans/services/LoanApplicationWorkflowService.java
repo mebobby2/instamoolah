@@ -6,9 +6,9 @@ import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
 import com.instamoolah.loans.core.LoanStatus;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.flowable.engine.HistoryService;
@@ -24,8 +24,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoanApplicationWorkflowService {
 
-  static final String processDefinitionKey = "newInstamoolahLoanV3";
+  static final String processDefinitionKey = "newInstamoolahLoanV4";
   static final String creditOfficerTaskGroup = "creditofficers";
+  static final String customerTaskGroup = "customer";
 
   @Autowired
   private RuntimeService runtimeService;
@@ -71,11 +72,7 @@ public class LoanApplicationWorkflowService {
   }
 
   public List<TaskPayload> getCreditOfficerTasks(String processId) {
-    List<Task> tasks = taskService
-      .createTaskQuery()
-      .taskCandidateGroup(creditOfficerTaskGroup)
-      .processInstanceId(processId)
-      .list();
+    List<Task> tasks = this.getTasksForGroup(creditOfficerTaskGroup, processId);
     return tasks
       .stream()
       .map(
@@ -93,6 +90,25 @@ public class LoanApplicationWorkflowService {
         }
       )
       .collect(Collectors.toList());
+  }
+
+
+  public List<TaskPayload> getCustomerTasks(String processId) {
+    List<Task> tasks = this.getTasksForGroup(customerTaskGroup, processId);
+    return tasks
+      .stream()
+      .map(
+        task -> { return new TaskPayload(task.getId(), task.getName()); }
+      )
+      .collect(Collectors.toList());
+  }
+
+  private List<Task> getTasksForGroup(String group, String processId) {
+    return taskService
+      .createTaskQuery()
+      .taskCandidateGroup(group)
+      .processInstanceId(processId)
+      .list();
   }
 
   public void completeCreditOfficerTask(String taskId) {

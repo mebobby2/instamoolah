@@ -41,4 +41,11 @@ public class TasksController {
     LOGGER.info("Reject credit officer tasks");
     service.rejectCreditOfficerTask(taskId);
   }
+
+  @GetMapping("/tasks/{processId}")
+  public List<TaskPayload> getCustomerTasks(@PathVariable String processId) {
+    LOGGER.info("Get customer tasks");
+    return service.getCustomerTasks(processId);
+  }
+
 }

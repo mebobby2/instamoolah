@@ -1,0 +1,8 @@
+{
+  "type": "kafka",
+  "channelType": "outbound",
+  "serializerType": "json",
+  "topic": "generate-contract",
+  "name": "Generate Contract Outbound Channel",
+  "key": "generateContractOutboundChannel"
+}

@@ -1,0 +1,16 @@
+{
+  "correlationParameters": [
+    {
+      "name": "loanAmount",
+      "type": "integer"
+    }
+  ],
+  "payload": [
+    {
+      "name": "loanAmount",
+      "type": "integer"
+    }
+  ],
+  "name": "Generate Contract",
+  "key": "generateContract"
+}
