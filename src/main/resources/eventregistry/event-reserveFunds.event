@@ -12,8 +12,5 @@
     }
   ],
   "name": "Reserve Funds Event",
-  "key": "reserveFunds",
-  "outboundChannelKeys": [
-    "reserveFundsOutboundChannel"
-  ]
+  "key": "reserveFunds"
 }
