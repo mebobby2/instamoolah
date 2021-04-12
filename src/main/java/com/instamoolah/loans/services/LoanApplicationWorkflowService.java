@@ -6,7 +6,6 @@ import com.instamoolah.loans.core.CollectionStatus;
 import com.instamoolah.loans.core.LoanApplication;
 import com.instamoolah.loans.core.LoanStatus;
 import java.util.ArrayList;
-import org.flowable.task.api.Task;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,6 +15,7 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.task.api.Task;
 import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,15 +78,16 @@ public class LoanApplicationWorkflowService {
       .stream()
       .map(
         task -> {
-          Map<String, Object> variables = taskService.getVariables(
-            task.getId()
-          );
-          return new TaskPayload(
-            task.getId(),
-            // (String) variables.get("author"),
-            // (String) variables.get("url")
-            task.getName()
-          );
+          // Map<String, Object> variables = taskService.getVariables(
+          //   task.getId()
+          // );
+          // return new TaskPayload(
+          //   task.getId(),
+          //   (String) variables.get("author"),
+          //   (String) variables.get("url")
+          //   task.getName()
+          // );
+          return new TaskPayload(task.getId(), task.getName());
         }
       )
       .collect(Collectors.toList());
@@ -132,31 +133,16 @@ public class LoanApplicationWorkflowService {
   }
 
   private LoanPayload populator(ProcessInstance processInstance) {
-    // Clean up all the multiple getVariable calls to one getVariables call
-    Integer riskScore = (Integer) runtimeService.getVariable(
-      processInstance.getId(),
-      "riskScore"
+    Map<String, Object> variables = runtimeService.getVariables(
+      processInstance.getId()
     );
-    Integer amount = (Integer) runtimeService.getVariable(
-      processInstance.getId(),
-      "amount"
-    );
-    Boolean emailVerified = (Boolean) runtimeService.getVariable(
-      processInstance.getId(),
-      "emailVerified"
-    );
-    String collectionStatus = (String) runtimeService.getVariable(
-      processInstance.getId(),
-      "collectionStatus"
-    );
-    LoanStatus loanStatus = (LoanStatus) runtimeService.getVariable(
-      processInstance.getId(),
-      "loanStatus"
-    );
-    String purpose = (String) runtimeService.getVariable(
-      processInstance.getId(),
-      "purpose"
-    );
+
+    Integer riskScore = (Integer) variables.get("riskScore");
+    Integer amount = (Integer) variables.get("amount");
+    Boolean emailVerified = (Boolean) variables.get("emailVerified");
+    String collectionStatus = (String) variables.get("collectionStatus");
+    LoanStatus loanStatus = (LoanStatus) variables.get("loanStatus");
+    String purpose = (String) variables.get("purpose");
 
     LoanPayload payload = new LoanPayload();
     payload.riskScore = riskScore;
