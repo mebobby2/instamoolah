@@ -26,17 +26,19 @@ public class LoansController {
 
   @PostMapping("/loans")
   public String start(@RequestBody LoanPayload application) {
-    LOGGER.info("new loan application started");
+    LOGGER.info("New loan application started");
     return service.startProcess(application);
   }
 
   @GetMapping("/loans")
   public List<LoanPayload> getLoans() {
+    LOGGER.info("Get all loans");
     return service.getProcesses();
   }
 
   @DeleteMapping("/loans/{id}")
   public void deleteLoan(@PathVariable String id) {
+    LOGGER.info("Delete loan");
     service.deleteProcess(id);
   }
 }

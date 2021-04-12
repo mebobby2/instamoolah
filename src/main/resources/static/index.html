@@ -216,7 +216,7 @@
             	$.each(data, function (key, val) {
 								if ("Manual Approval" == val.name) {
 									$("<tr><td>" + val.name + "</td>" +
-											"<td>" +
+											"<td data-id=" + val.id + ">" +
 											"Wait for approval" +
 											"</td>" +
 											"</tr>").appendTo("#taskscontent");

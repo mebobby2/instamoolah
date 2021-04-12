@@ -94,6 +94,10 @@ public class LoanApplicationWorkflowService {
       .collect(Collectors.toList());
   }
 
+  public void completeCreditOfficerTask(String taskId) {
+    taskService.complete(taskId);
+  }
+
   // Doesn't seem to work - returns 0 results
   private List<LoanPayload> getHistoricProcesses() {
     List<HistoricProcessInstance> historyProcesses = historyService
