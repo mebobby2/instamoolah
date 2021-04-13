@@ -128,9 +128,23 @@ public class LoanApplicationWorkflowService {
     taskService.complete(taskId, variables);
   }
 
+  public void approveCustomerTask(String taskId) {
+    Map<String, Object> variables = new HashMap<String, Object>();
+    variables.put("customerAccepted", true);
+    variables.put("loanStatus", LoanStatus.ACCEPTED);
+    taskService.complete(taskId, variables);
+  }
+
   public void rejectCreditOfficerTask(String taskId) {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("manualAffordabilityApproved", false);
+    taskService.complete(taskId, variables);
+  }
+
+  public void rejectCustomerTask(String taskId) {
+    Map<String, Object> variables = new HashMap<String, Object>();
+    variables.put("customerAccepted", false);
+    variables.put("loanStatus", LoanStatus.REJECTED);
     taskService.complete(taskId, variables);
   }
 

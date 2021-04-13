@@ -32,7 +32,7 @@ public class TasksController {
 
   @PutMapping("/tasks/creditofficers/approve/{taskId}")
   public void completeTask(@PathVariable String taskId) {
-    LOGGER.info("Complete credit officer tasks");
+    LOGGER.info("Approve credit officer tasks");
     service.completeCreditOfficerTask(taskId);
   }
 
@@ -40,5 +40,17 @@ public class TasksController {
   public void rejectTask(@PathVariable String taskId) {
     LOGGER.info("Reject credit officer tasks");
     service.rejectCreditOfficerTask(taskId);
+  }
+
+  @PutMapping("/tasks/customer/approve/{taskId}")
+  public void completeCustomerTask(@PathVariable String taskId) {
+    LOGGER.info("Approve customer tasks");
+    service.approveCustomerTask(taskId);
+  }
+
+  @PutMapping("/tasks/customer/reject/{taskId}")
+  public void rejectCustomerTask(@PathVariable String taskId) {
+    LOGGER.info("Reject customer tasks");
+    service.rejectCustomerTask(taskId);
   }
 }

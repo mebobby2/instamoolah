@@ -96,10 +96,12 @@
     }
 
     function completeTask(id, taskName, taskId) {
-
-        $.post("/travels/" + id + "/" + taskName + "/" + taskId, JSON.stringify({}), function () {
+			$.ajax({
+            method: "PUT",
+            url: "/tasks/customer/approve/" + taskId
+        }).done(function () {
             load();
-        }, "json");
+        });
     }
 
     function load() {
