@@ -8,4 +8,5 @@ public class LoanPayload {
   public Integer riskScore;
   public Boolean emailVerified;
   public String collectionStatus;
+  public Boolean completed;
 }

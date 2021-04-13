@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoanApplicationWorkflowService {
 
-  static final String processDefinitionKey = "newInstamoolahLoanV4";
+  static final String processDefinitionKey = "newInstamoolahLoan";
   static final String creditOfficerTaskGroup = "creditofficers";
   static final String customerTaskGroup = "customer";
 
@@ -138,6 +138,7 @@ public class LoanApplicationWorkflowService {
   public void rejectCreditOfficerTask(String taskId) {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("manualAffordabilityApproved", false);
+    variables.put("loanStatus", LoanStatus.REJECTED);
     taskService.complete(taskId, variables);
   }
 
@@ -153,7 +154,7 @@ public class LoanApplicationWorkflowService {
     List<HistoricProcessInstance> historyProcesses = historyService
       .createHistoricProcessInstanceQuery()
       .finished()
-      .processDefinitionId(processDefinitionKey)
+      // .processDefinitionId(processDefinitionKey) // returns 0 if filtering by process definition...don't know why
       .list();
 
     List<LoanPayload> loans = new ArrayList<>(historyProcesses.size());
@@ -180,10 +181,11 @@ public class LoanApplicationWorkflowService {
     payload.riskScore = (Integer) map.get("riskScore").getValue();
     payload.emailVerified = (Boolean) map.get("emailVerified").getValue();
     payload.collectionStatus = (String) map.get("collectionStatus").getValue();
-    payload.status = (String) map.get("collectionStatus").getValue();
+    payload.status = ((LoanStatus) map.get("loanStatus").getValue()).name();
     payload.amount = (Integer) map.get("amount").getValue();
     payload.purpose = (String) map.get("purpose").getValue();
     payload.id = instance.getId();
+    payload.completed = true;
     return payload;
   }
 
@@ -207,6 +209,7 @@ public class LoanApplicationWorkflowService {
     payload.amount = amount;
     payload.purpose = purpose;
     payload.id = processInstance.getId();
+    payload.completed = false;
     return payload;
   }
 }
