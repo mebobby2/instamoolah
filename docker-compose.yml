@@ -40,3 +40,8 @@ services:
       ZK_HOSTS: zookeeper:2181
       APPLICATION_SECRET: letmein
       KM_ARGS: -Djava.net.preferIPv4Stack=true
+
+  flowableui:
+    image: flowable/flowable-ui
+    ports:
+      - "8080:8080"
