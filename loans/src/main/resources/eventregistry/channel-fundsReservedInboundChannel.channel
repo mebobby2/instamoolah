@@ -1,0 +1,13 @@
+{
+  "type": "kafka",
+  "channelType": "inbound",
+  "deserializerType": "json",
+  "topics": [
+    "funds-reserved"
+  ],
+  "channelEventKeyDetection": {
+    "fixedValue": "fundingResult"
+  },
+  "name": "Funds Reserved Inbound Channel",
+  "key": "fundsReservedInboundChannel"
+}

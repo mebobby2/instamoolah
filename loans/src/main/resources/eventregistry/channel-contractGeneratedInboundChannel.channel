@@ -1,0 +1,13 @@
+{
+  "type": "kafka",
+  "channelType": "inbound",
+  "deserializerType": "json",
+  "topics": [
+    "contract-generated"
+  ],
+  "channelEventKeyDetection": {
+    "fixedValue": "fundingResult"
+  },
+  "name": "Contract Generated Inbound Channel",
+  "key": "contractGeneratedInboundChannel"
+}
