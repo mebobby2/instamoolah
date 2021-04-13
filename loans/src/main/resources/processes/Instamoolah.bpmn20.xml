@@ -53,8 +53,6 @@
         <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[generateContractOutboundChannel]]></flowable:channelKey>
       </extensionElements>
     </serviceTask>
-    <sequenceFlow id="sid-6D613518-153E-4AE5-8D90-236223482227" sourceRef="reserveFunds" targetRef="parallelJoin"></sequenceFlow>
-    <sequenceFlow id="sid-83C8FCC3-895F-49AE-A05D-4989552A83DD" sourceRef="generateContract" targetRef="parallelJoin"></sequenceFlow>
     <sequenceFlow id="sid-00F3458B-972B-40AE-B972-99285DD9BB9A" sourceRef="customerAccept" targetRef="sid-047BC06F-76EB-445A-A91B-F2EC09D82A87"></sequenceFlow>
     <intermediateCatchEvent id="fundsReserved" name="Funds Reserved">
       <extensionElements>
@@ -62,7 +60,16 @@
         <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[fundsReservedInboundChannel]]></flowable:channelKey>
       </extensionElements>
     </intermediateCatchEvent>
-    <sequenceFlow id="sid-C275073E-5C7F-4AA0-8866-AF619A56C9C4" sourceRef="fundsReserved" targetRef="customerAccept"></sequenceFlow>
-    <sequenceFlow id="sid-9D5F3604-C8E2-4938-95EC-D38A761CF7F7" sourceRef="parallelJoin" targetRef="fundsReserved"></sequenceFlow>
+    <sequenceFlow id="sid-78186AC7-4F76-46EB-956E-65B3902DE399" sourceRef="parallelJoin" targetRef="customerAccept"></sequenceFlow>
+    <sequenceFlow id="sid-15DBF87B-6C0A-4B0E-B468-74FCDF46B1BA" sourceRef="reserveFunds" targetRef="fundsReserved"></sequenceFlow>
+    <sequenceFlow id="sid-268AE8AF-7751-4D5B-AFB6-7DDF45AB7E1B" sourceRef="fundsReserved" targetRef="parallelJoin"></sequenceFlow>
+    <intermediateCatchEvent id="contractGenerated" name="Contract Generated">
+      <extensionElements>
+        <flowable:eventType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[fundingResult]]></flowable:eventType>
+        <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[contractGeneratedInboundChannel]]></flowable:channelKey>
+      </extensionElements>
+    </intermediateCatchEvent>
+    <sequenceFlow id="sid-B932F6D0-C92F-48D2-96BA-A3F796291A71" sourceRef="generateContract" targetRef="contractGenerated"></sequenceFlow>
+    <sequenceFlow id="sid-3185CA45-BA05-4550-A3C7-EB503E35227B" sourceRef="contractGenerated" targetRef="parallelJoin"></sequenceFlow>
   </process>
 </definitions>
