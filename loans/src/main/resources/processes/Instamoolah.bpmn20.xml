@@ -65,7 +65,7 @@
     <sequenceFlow id="sid-268AE8AF-7751-4D5B-AFB6-7DDF45AB7E1B" sourceRef="fundsReserved" targetRef="parallelJoin"></sequenceFlow>
     <intermediateCatchEvent id="contractGenerated" name="Contract Generated">
       <extensionElements>
-        <flowable:eventType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[fundingResult]]></flowable:eventType>
+        <flowable:eventType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[fundingResultTwo]]></flowable:eventType>
         <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[contractGeneratedInboundChannel]]></flowable:channelKey>
       </extensionElements>
     </intermediateCatchEvent>

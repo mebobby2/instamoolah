@@ -124,6 +124,7 @@ public class LoanApplicationWorkflowService {
   public void completeCreditOfficerTask(String taskId) {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("manualAffordabilityApproved", true);
+    variables.put("loanStatus", LoanStatus.APPROVED);
     taskService.complete(taskId, variables);
   }
 
