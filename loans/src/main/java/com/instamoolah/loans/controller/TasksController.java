@@ -24,10 +24,10 @@ public class TasksController {
   @Autowired
   private LoanApplicationWorkflowService service;
 
-  @GetMapping("/tasks/creditofficers/{processId}")
+  @GetMapping("/tasks/{processId}")
   public List<TaskPayload> getTasks(@PathVariable String processId) {
     LOGGER.info("Get credit officer tasks");
-    return service.getCreditOfficerTasks(processId);
+    return service.getTasks(processId);
   }
 
   @PutMapping("/tasks/creditofficers/approve/{taskId}")
@@ -41,11 +41,4 @@ public class TasksController {
     LOGGER.info("Reject credit officer tasks");
     service.rejectCreditOfficerTask(taskId);
   }
-
-  @GetMapping("/tasks/{processId}")
-  public List<TaskPayload> getCustomerTasks(@PathVariable String processId) {
-    LOGGER.info("Get customer tasks");
-    return service.getCustomerTasks(processId);
-  }
-
 }

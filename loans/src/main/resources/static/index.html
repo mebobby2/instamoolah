@@ -212,7 +212,7 @@
             modal.find('.modal-title').text("Tasks");
 
             $("#taskscontent").children().remove();
-            $.getJSON("/tasks/creditofficers/" + id, function (data) {
+            $.getJSON("/tasks/" + id, function (data) {
             	$.each(data, function (key, val) {
 								if ("Manual Approval" == val.name) {
 									$("<tr><td>" + val.name + "</td>" +

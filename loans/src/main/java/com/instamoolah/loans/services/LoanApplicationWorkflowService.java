@@ -71,7 +71,16 @@ public class LoanApplicationWorkflowService {
     runtimeService.deleteProcessInstance(id, "customer delete");
   }
 
-  public List<TaskPayload> getCreditOfficerTasks(String processId) {
+  public List<TaskPayload> getTasks(String processId) {
+    return Stream
+      .concat(
+        this.getCreditOfficerTasks(processId).stream(),
+        this.getCustomerTasks(processId).stream()
+      )
+      .collect(Collectors.toList());
+  }
+
+  private List<TaskPayload> getCreditOfficerTasks(String processId) {
     List<Task> tasks = this.getTasksForGroup(creditOfficerTaskGroup, processId);
     return tasks
       .stream()
@@ -92,13 +101,14 @@ public class LoanApplicationWorkflowService {
       .collect(Collectors.toList());
   }
 
-
-  public List<TaskPayload> getCustomerTasks(String processId) {
+  private List<TaskPayload> getCustomerTasks(String processId) {
     List<Task> tasks = this.getTasksForGroup(customerTaskGroup, processId);
     return tasks
       .stream()
       .map(
-        task -> { return new TaskPayload(task.getId(), task.getName()); }
+        task -> {
+          return new TaskPayload(task.getId(), task.getName());
+        }
       )
       .collect(Collectors.toList());
   }
