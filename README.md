@@ -1,14 +1,19 @@
 # Instamoolah Loans
 
 ## Prerequisites
-* PostgreSQL
+* PostgreSQL (postgres.app)
 * Kafka
 
+```
+docker-compose up -d
+```
 ## Run
 Start server
 ```
 ./mvnw spring-boot:run
 ```
+
+Visit: http://localhost:8000/index.html
 ## Test
 Get Credit Officer Tasks
 ```
