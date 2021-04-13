@@ -48,6 +48,7 @@ public class FundingApplication {
       Thread.currentThread().interrupt();
     }
 
+		logger.info("Publish message to {}", "funds-reserved");
     kafkaTemplate.send("funds-reserved", fund);
   }
 
@@ -71,6 +72,7 @@ public class FundingApplication {
       Thread.currentThread().interrupt();
     }
 
+		logger.info("Publish message to {}", "contract-generated");
     kafkaTemplate.send("contract-generated", fund);
   }
 

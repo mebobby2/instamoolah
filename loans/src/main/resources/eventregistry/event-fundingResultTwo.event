@@ -1,0 +1,11 @@
+{
+  "correlationParameters": [],
+  "payload": [
+    {
+      "name": "loanAmount",
+      "type": "integer"
+    }
+  ],
+  "name": "Funding result event",
+  "key": "fundingResultTwo"
+}

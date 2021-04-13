@@ -55,7 +55,7 @@
     </serviceTask>
     <intermediateCatchEvent id="contractGenerated" name="Contract Generated">
       <extensionElements>
-        <flowable:eventType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[fundingResult]]></flowable:eventType>
+        <flowable:eventType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[fundingResultTwo]]></flowable:eventType>
         <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[contractGeneratedInboundChannel]]></flowable:channelKey>
       </extensionElements>
     </intermediateCatchEvent>
@@ -125,7 +125,7 @@
         <omgdc:Bounds height="80.0" width="100.0" x="750.0" y="345.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="contractGenerated" id="BPMNShape_contractGenerated">
-        <omgdc:Bounds height="30.0" width="30.0" x="1005.0" y="345.0"></omgdc:Bounds>
+        <omgdc:Bounds height="30.0" width="30.0" x="1005.0" y="330.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-BB927679-774F-443D-96E6-9563FEFED725" id="BPMNShape_sid-BB927679-774F-443D-96E6-9563FEFED725">
         <omgdc:Bounds height="40.0" width="40.0" x="945.0" y="285.0"></omgdc:Bounds>
@@ -223,7 +223,7 @@
         <omgdi:waypoint x="905.0" y="285.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-E08D7BB7-4557-4894-97CE-2F744AB6AA56" id="BPMNEdge_sid-E08D7BB7-4557-4894-97CE-2F744AB6AA56">
-        <omgdi:waypoint x="1080.0" y="360.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1080.0" y="345.0"></omgdi:waypoint>
         <omgdi:waypoint x="1080.0" y="305.0"></omgdi:waypoint>
         <omgdi:waypoint x="1110.0" y="305.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -232,8 +232,8 @@
         <omgdi:waypoint x="945.5" y="305.5"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-46E2889B-BEE0-433E-93A8-7CA99E548C04" id="BPMNEdge_sid-46E2889B-BEE0-433E-93A8-7CA99E548C04">
-        <omgdi:waypoint x="965.5" y="324.4326465201466"></omgdi:waypoint>
-        <omgdi:waypoint x="965.5" y="360.0"></omgdi:waypoint>
+        <omgdi:waypoint x="965.5" y="324.42607323232323"></omgdi:waypoint>
+        <omgdi:waypoint x="965.5" y="345.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

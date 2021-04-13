@@ -6,7 +6,7 @@
     "contract-generated"
   ],
   "channelEventKeyDetection": {
-    "fixedValue": "fundingResult"
+    "fixedValue": "fundingResultTwo"
   },
   "name": "Contract Generated Inbound Channel",
   "key": "contractGeneratedInboundChannel"
