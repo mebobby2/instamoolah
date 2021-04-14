@@ -10,7 +10,7 @@
     <sequenceFlow id="sid-CEDD3C22-B89C-4592-98C5-67CAC4BE589F" sourceRef="sid-48F32FD6-BA32-4833-9111-BA3D2DC4630D" targetRef="checkAutoApprove">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${affordabilityApproved}]]></conditionExpression>
     </sequenceFlow>
-    <serviceTask id="checkAutoApprove" name="Check Auto Approve" flowable:delegateExpression="${checkAutoApprove}"></serviceTask>
+    <serviceTask id="checkAutoApprove" name="Check Auto Approve" flowable:delegateExpression="${checkAutoApprove}" flowable:async="true"></serviceTask>
     <exclusiveGateway id="sid-C517D338-A87E-4FDF-8EBE-40C03BE15690"></exclusiveGateway>
     <sequenceFlow id="sid-B9EC2661-F0DF-4F9F-A1D4-E3F251F6AF98" sourceRef="checkAutoApprove" targetRef="sid-C517D338-A87E-4FDF-8EBE-40C03BE15690"></sequenceFlow>
     <userTask id="manualApproval" name="Manual Approval" flowable:candidateGroups="creditofficers" flowable:formFieldValidation="true"></userTask>

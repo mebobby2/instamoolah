@@ -42,6 +42,9 @@ public class AutoApproveCheck implements JavaDelegate {
 
     LOGGER.info("Loan status is now {}", application.getStatus().name());
 
+    // Uncomment the line below to stimulate a ArithmeticException to test flowable:async="true" feature
+    // Integer result = 1/0;
+
     if (application.isApproved()) {
       execution.setVariable("loanStatus", application.getStatus());
     }
